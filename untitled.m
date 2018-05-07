@@ -199,6 +199,9 @@ global Eqs ;
 global eps;
 global iter ;
 x = get(handles.edit4,'String');
+xUpper = get(handles.edit5,'String');
+xLower = get(handles.edit6,'String');
+
 Eqs = strsplit(x,',');
 iterations = get(handles.edit2,'String');
 epsilon = get(handles.edit3,'String');
@@ -214,6 +217,18 @@ end;
 method =get(handles.text11,'String');
 switch method
     case "1- Bisection"
+        [XL,XU,XR,ea,f] = bisection(Eqs , str2double(xLower), str2double(xUpper), str2double(eps), str2double(iter));
+        ezplot(f);
+        hold on;
+        plot([XL(1) XL(1)], ylim);
+        hold on;
+        plot([XU(1) XU(1)], ylim);
+        xL = xlim; 
+        yL = ylim; 
+        line(xL, [0 0],'color','k','linewidth',1); 
+        line([0 0], yL,'color','k','linewidth',1); 
+        zoom out;
+        legend("F(X)","XLower","XUpper");
         %call method bisection
         hideOne(handles);
     case "2- False-position"
@@ -222,8 +237,8 @@ switch method
     case "3- Fixed point"
         %call method bisection
         [f, g, xNew, error] = FixedPoint (Eqs ,str2double(iter), str2double(eps), 0 );
-        cla;
-        ezplot(f);
+        clf;
+        ezplot(f,-5000,5000);
         hold on;
         ezplot(g);
         xL = xlim; 
@@ -231,7 +246,7 @@ switch method
         line(xL, [0 0],'color','k','linewidth',1); 
         line([0 0], yL,'color','k','linewidth',1); 
         zoom on;
-        legend("g(X)","F(X)")
+        legend("g(X)","F(X)");
         hideTwo(handles);
     case "4- Newton-Raphson"
         %call method bisection
