@@ -15,18 +15,20 @@ for i = 1:order+1
        if i == j
          continue;
        end
-       demorator = demorator * (points{i} - points{j});
-       temp(x) = temp * (x - points{j});
+       demorator = demorator * (points(i) - points(j));
+       temp(x) = temp * (x - points(j));
        
+    end
+     if (demorator ~= 0)
+       f(x) = f + (temp / demorator)*values(i);
+     else
+       f(x) = f + 1000000*values(i);         
      end
-     f(x) = f + (temp / demorator)*values(i);
- 
 end
 
 for i=1:length(queries)
 results(i) = vpa(f(queries(i)))
 end
-
 
 end
 

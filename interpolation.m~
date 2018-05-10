@@ -72,6 +72,8 @@ function varargout = interpolation_OutputFcn(hObject, eventdata, handles)
 varargout{1} = handles.output;
 
 
+<<<<<<< HEAD:interpolation.m
+=======
 % --- Executes on selection change in listboxpart2.
 function listboxpart2_Callback(hObject, eventdata, handles)
 % hObject    handle to listboxpart2 (see GCBO)
@@ -151,6 +153,7 @@ chosenMethod= get(handles.text6,'String')
 
 
 
+>>>>>>> eba2ceb2ca3bb71e9778bd5650c9f529c40a648f:part2.m
 
 function edit1_Callback(hObject, eventdata, handles)
 % hObject    handle to edit1 (see GCBO)
