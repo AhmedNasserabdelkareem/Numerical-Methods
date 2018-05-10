@@ -96,14 +96,14 @@ global queries;
 global correspondingPoints ;
  x =  get(handles.edit1,'String');
  y =  get(handles.edit2,'String');
- stringquery =  get(handles.edit3,'String');
+ stringquery =  get(handles.edit4,'String');
 
 correspondingPoints=strsplit(y,',');
  
 points = strsplit(x,',');
 queries = strsplit(stringquery,',');
-order= get(handles.edit4,'String');
-chosenMethod= get(handles.text6,'String')
+order= get(handles.edit3,'String');
+chosenMethod= get(handles.text2,'String')
 if(str2double(order) + 1 > length(str2double(points)) || length(str2double(points)) ~= length(str2double(correspondingPoints)))
    return; 
 end
@@ -111,7 +111,8 @@ end
 switch chosenMethod
     case "1- Newton"
      [ result,excution_time,fn,answers ] = newton_interpolation( str2double(points), str2double(correspondingPoints), str2double(queries)  )
-        ezplot(fn,-100,100);
+        ezplot(fn);
+        fn
         xL = xlim;
         yL = ylim;
         line(xL, [0 0],'color','k','linewidth',1);
