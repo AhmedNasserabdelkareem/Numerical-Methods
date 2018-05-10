@@ -54,6 +54,13 @@ function untitled_OpeningFcn(hObject, eventdata, handles, varargin)
 
 % Choose default command line output for untitled
 handles.output = hObject;
+guidata(hObject,handles);
+index = 0;
+handles.index = index;
+guidata(hObject,handles);
+flags = zeros(6,1);
+handles.flags = flags;
+
 
 % Update handles structure
 guidata(hObject, handles);
@@ -208,6 +215,14 @@ try
 catch
     Eqs = x;
 end
+handles.index = 0
+handles.bi = 0;
+handles.false = 0;
+handles.fixed = 0;
+handles.newtown = 0;
+handles.secant = 0;
+handles.verrta = 0;
+guidata(hObject,handles);
 iterations = get(handles.edit2,'String');
 epsilon = get(handles.edit3,'String');
 eps=epsilon;
@@ -240,7 +255,7 @@ switch method
         Data=[str2num(XL),str2num(XU)];
         set(handles.uitable1,'data',Data);
     case "2- False-position"
-         hideOne(handles);
+        hideOne(handles);
         [XL,XU,XR,ea,f] = falsePosition(Eqs,str2double(xLower), str2double(xUpper), str2double(eps), str2double(iter));
         ezplot(f,-100,100);
         hold on;
@@ -254,7 +269,7 @@ switch method
         zoom on;
         legend("F(X)","XLower","XUpper");
         hold off;
-                Data=[(XL),(XU)];
+        Data=[(XL),(XU)];
         set(handles.uitable1,'data',Data);
     case "3- Fixed point"
         hideTwo(handles);
@@ -270,20 +285,20 @@ switch method
         zoom on;
         legend("g(X)","F(X)");
         hold off;
-                Data=[str2num(f),str2num(g)];
+        Data=[str2num(f),str2num(g)];
         set(handles.uitable1,'data',Data);
     case "4- Newton-Raphson"
-         hideTwo(handles);
+        hideTwo(handles);
         [ fn,fx,error,iteration_no,excution_time,iteration,Xi,XiPlusOne,Fx,AbsErr ] = newton_Raphson( str2double(xLower),Eqs,str2double(iter),str2double(eps) );
         ezplot(fn);
         hold on;
         ezplot(fx);
-        xL = xlim; 
-        yL = ylim; 
+        xL = xlim;
+        yL = ylim;
         hold on;
-        line(xL, [0 0],'color','k','linewidth',1); 
-        line([0 0], yL,'color','k','linewidth',1); 
-     %   zoom on;
+        line(xL, [0 0],'color','k','linewidth',1);
+        line([0 0], yL,'color','k','linewidth',1);
+        %   zoom on;
         legend("F(X)","F'(X)");
         hold off;
     case "5- Secant"
@@ -292,12 +307,12 @@ switch method
         ezplot(fn);
         hold on;
         ezplot(fx);
-        xL = xlim; 
-        yL = ylim; 
+        xL = xlim;
+        yL = ylim;
         hold on;
-        line(xL, [0 0],'color','k','linewidth',1); 
-        line([0 0], yL,'color','k','linewidth',1); 
-     %   zoom on;
+        line(xL, [0 0],'color','k','linewidth',1);
+        line([0 0], yL,'color','k','linewidth',1);
+        %   zoom on;
         legend("F(X)","F'(X)");
         hold off;
     case "6- Bierge Vieta"
@@ -423,25 +438,27 @@ end;
 if (isempty(iterations))
     iter=50;
 end;
-global index,bi,false,fixed,newtown,secant,verrta;
-
 method =get(handles.text11,'String');
 switch method
     case "1- Bisection"
-        if(bi == 0)
-            index=1;
+        if((handles.flags(1)) == 0)
+            handles.index = 0
+            handles.flags =zeros(6,1);
+            handles.flags(1) = 1;
+            guidata(hObject,handles);
         end
         [XL,XU,XR,ea,f] = bisection(Eqs , str2double(xLower), str2double(xUpper), str2double(eps), str2double(iter));
-        if(index < length(XL))
-            index = index + 1;
+        if(handles.index < length(XL))
+            handles.index = handles.index + 1
+            guidata(hObject,handles);
         else
             return;
         end
         ezplot(f);
         hold on;
-        plot([XL(index) XL(index)], ylim);
+        plot([XL(handles.index) XL(handles.index)], ylim);
         hold on;
-        plot([XU(index) XU(index)], ylim);
+        plot([XU(handles.index) XU(handles.index)], ylim);
         xL = xlim;
         yL = ylim;
         line(xL, [0 0],'color','k','linewidth',1);
@@ -451,8 +468,11 @@ switch method
         hold off;
         hideOne(handles);
     case "2- False-position"
-        if(false == 0)
-            index=1;
+        if((handles.flags(2)) == 0)
+            handles.index = 0
+            handles.flags =zeros(6,1);
+            handles.flags(2) = 1;
+            guidata(hObject,handles);
         end
         [XL,XU,XR,ea,f] = falsePosition(Eqs,str2double(xLower), str2double(xUpper), str2double(eps), str2double(iter));
         if(index < length(XL))
@@ -474,8 +494,15 @@ switch method
         hold off;
         hideOne(handles);
     case "3- Fixed point"
-        if(fixed == 0)
-            index=1;
+        if((handles.fixed) == 0)
+            handles.index = 0
+            handles.bi = 0;
+            handles.false = 0;
+            handles.fixed = 1;
+            handles.newtown = 0;
+            handles.secant = 0;
+            handles.verrta = 0;
+            guidata(hObject,handles);
         end
         [f, g, xNew, error] = FixedPoint (Eqs ,str2double(iter), str2double(eps), 0 );
         if(index < length(xNew))
@@ -483,7 +510,6 @@ switch method
         else
             return;
         end
-        clf;
         ezplot(f,-5000,5000);
         hold on;
         ezplot(g);
@@ -494,19 +520,29 @@ switch method
         zoom on;
         legend("g(X)","F(X)");
         hold off;
-        hideTwo(handles);    case "4- Newton-Raphson"
+        hideTwo(handles);    
+    case "4- Newton-Raphson"
+         if((handles.newtown) == 0)
+            handles.index = 0
+            handles.bi = 0;
+            handles.false = 0;
+            handles.fixed = 1;
+            handles.newtown = 1;
+            handles.secant = 0;
+            handles.verrta = 0;
+            guidata(hObject,handles);
+        end
         [ fn,fx,error,iteration_no,excution_time,iteration,Xi,XiPlusOne,Fx,AbsErr ] = newton_Raphson( str2double(xLower),Eqs,str2double(iter),str2double(eps) );
-        clf;
         ezplot(fn,-5000,5000);
         hold on;
         ezplot(fx);
-        xL = xlim; 
-        yL = ylim; 
-        line(xL, [0 0],'color','k','linewidth',1); 
-        line([0 0], yL,'color','k','linewidth',1); 
+        xL = xlim;
+        yL = ylim;
+        line(xL, [0 0],'color','k','linewidth',1);
+        line([0 0], yL,'color','k','linewidth',1);
         zoom on;
         legend("F(X)","F'(X)");
-         hideTwo(handles);
+        hideTwo(handles);
     case "5- Secant"
         %call method bisection
         hideTwo(handles);
