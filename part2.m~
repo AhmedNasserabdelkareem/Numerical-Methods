@@ -132,7 +132,7 @@ points = strsplit(x,',');
 
 order= get(handles.edit3,'String');
 chosenMethod= get(handles.text6,'String');
-%NASSER SWITCH DEPENED ON METHOD CHOSEN
+%NASSER S
 switch chosenMethod
     case "1- Newton"
         % execute newton here NASSER
