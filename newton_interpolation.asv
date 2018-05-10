@@ -14,13 +14,11 @@ end
 syms x;
 fn = result(1,2);
 for i = 2:5
-    fnLoop = 1;
-   for j = i:1
-      fnLoop = fnLoop * (x - result(5-j,1)); 
-   end
-   fnLoop = fnLoop * result(i,i+1);
-end
-fn = fn + fnLoop;
+    fn
+   for j = 4:1
+       
+   end    
+end    
 excution_time = toc;
 
 
