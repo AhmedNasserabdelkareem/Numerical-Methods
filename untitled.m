@@ -263,19 +263,18 @@ switch method
     case "2- False-position"
          hideOne(handles);
          [XL,XU,XR,ea,f] = falsePosition(Eqs,str2double(xLower), str2double(xUpper), str2double(eps), str2double(iter));
-set
-         %        ezplot(f,-100,100);
-%         hold on;
-%         plot([XL(1) XL(1)], ylim);
-%         hold on;
-%         plot([XU(1) XU(1)], ylim);
-%         xL = xlim;
-%         yL = ylim;
-%         line(xL, [0 0],'color','k','linewidth',1);
-%         line([0 0], yL,'color','k','linewidth',1);
-%         zoom on;
-%         legend("F(X)","XLower","XUpper");
-%         hold off;
+                ezplot(f,-100,100);
+        hold on;
+        plot([XL(1) XL(1)], ylim);
+        hold on;
+        plot([XU(1) XU(1)], ylim);
+        xL = xlim;
+        yL = ylim;
+        line(xL, [0 0],'color','k','linewidth',1);
+        line([0 0], yL,'color','k','linewidth',1);
+        zoom on;
+        legend("F(X)","XLower","XUpper");
+        hold off;
         tempo = cat(2,XL.',XU.');
         temperror = cat(2,XR.',ea.');
         matrix = cat(2,tempo,temperror);
