@@ -27,11 +27,11 @@ function varargout = untitled(varargin)
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
 gui_State = struct('gui_Name',       mfilename, ...
-    'gui_Singleton',  gui_Singleton, ...
-    'gui_OpeningFcn', @untitled_OpeningFcn, ...
-    'gui_OutputFcn',  @untitled_OutputFcn, ...
-    'gui_LayoutFcn',  [] , ...
-    'gui_Callback',   []);
+                   'gui_Singleton',  gui_Singleton, ...
+                   'gui_OpeningFcn', @untitled_OpeningFcn, ...
+                   'gui_OutputFcn',  @untitled_OutputFcn, ...
+                   'gui_LayoutFcn',  [] , ...
+                   'gui_Callback',   []);
 if nargin && ischar(varargin{1})
     gui_State.gui_Callback = str2func(varargin{1});
 end
@@ -63,7 +63,7 @@ guidata(hObject, handles);
 
 
 % --- Outputs from this function are returned to the command line.
-function varargout = untitled_OutputFcn(hObject, eventdata, handles)
+function varargout = untitled_OutputFcn(hObject, eventdata, handles) 
 % varargout  cell array for returning output args (see VARARGOUT);
 % hObject    handle to figure
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -100,7 +100,7 @@ end
 function listbox1_Callback(hObject, eventdata, handles)
 index = get(hObject,'Value');
 list = get(hObject,'String');
-method = list{index};
+method = list{index}; 
 set(handles.text11,'String',method);
 %set(handles.edit5,'String',method);
 % hObject    handle to listbox1 (see GCBO)
@@ -223,35 +223,22 @@ method =get(handles.text11,'String');
 switch method
     case "1- Bisection"
         [XL,XU,XR,ea,f] = bisection(Eqs , str2double(xLower), str2double(xUpper), str2double(eps), str2double(iter));
-        hold off;
         ezplot(f);
         hold on;
         plot([XL(1) XL(1)], ylim);
         hold on;
         plot([XU(1) XU(1)], ylim);
-        xL = xlim;
-        yL = ylim;
-        line(xL, [0 0],'color','k','linewidth',1);
-        line([0 0], yL,'color','k','linewidth',1);
-        zoom on;
+        xL = xlim; 
+        yL = ylim; 
+        line(xL, [0 0],'color','k','linewidth',1); 
+        line([0 0], yL,'color','k','linewidth',1); 
+        zoom out;
         legend("F(X)","XLower","XUpper");
-        hold off;        
+        %call method bisection
         hideOne(handles);
     case "2- False-position"
-        [XL,XU,XR,ea,f] = falsePosition(Eqs,str2double(xLower), str2double(xUpper), str2double(eps), str2double(iter));
-        ezplot(f,-100,100);
-        hold on;
-        plot([XL(1) XL(1)], ylim);
-        hold on;
-        plot([XU(1) XU(1)], ylim);
-        xL = xlim;
-        yL = ylim;
-        line(xL, [0 0],'color','k','linewidth',1);
-        line([0 0], yL,'color','k','linewidth',1);
-        zoom on;
-        legend("F(X)","XLower","XUpper");
-        hold off;
-        hideOne(handles);
+        %call method bisection
+         hideOne(handles);
     case "3- Fixed point"
         %call method bisection
         [f, g, xNew, error] = FixedPoint (Eqs ,str2double(iter), str2double(eps), 0 );
@@ -259,26 +246,26 @@ switch method
         ezplot(f,-5000,5000);
         hold on;
         ezplot(g);
-        xL = xlim;
-        yL = ylim;
-        line(xL, [0 0],'color','k','linewidth',1);
-        line([0 0], yL,'color','k','linewidth',1);
+        xL = xlim; 
+        yL = ylim; 
+        line(xL, [0 0],'color','k','linewidth',1); 
+        line([0 0], yL,'color','k','linewidth',1); 
         zoom on;
         legend("g(X)","F(X)");
         hideTwo(handles);
     case "4- Newton-Raphson"
         %call method bisection
-        hideTwo(handles);
+         hideTwo(handles);
     case "5- Secant"
         %call method bisection
         hideTwo(handles);
     case "6- Bierge Vieta"
-        %call method bisection
+        %call method bisection  
         hideTwo(handles);
-        
+
 end
-
-
+        
+    
 
 % hObject    get(handles.edit4,'String');handle to pushbutton2 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB

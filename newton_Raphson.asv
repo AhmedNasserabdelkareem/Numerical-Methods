@@ -14,18 +14,16 @@ for i = 1:upper
    syms x;
    fx = diff(fn,x);
    x = xi;
-   if(subs(fx) == 0 || (i == 10 && Ea(1) < Ea(i))) 
+   if(fx(x) == 0 || (i == 10 && Ea(1) < Ea(i))) 
       error = 1;
       break;
    end
    x = xi;
-   xnew = xi - (subs(fn)/subs(fx));
-   xnew = vpa(xnew);
+   xnew = xi - (fn(x)/fx(x));
    Xiold(i) = xi;
-   Xinew(i) =xnew;
+   Xinew(i) = xnew;
    Ea(i) = abs(xnew-xi);
-   test = ((abs(vpa(xnew)-xi)/vpa(xnew)));
-   if (vpa(abs(test))<=tolerance)
+   if (abs(xnew-xi)/xnew)<=tolerance
        break;
    end 
    xi=xnew;
