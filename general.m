@@ -1,4 +1,4 @@
-function [roots] = general( func )
+function [roots, fn] = general( func )
 %general get all the roots of an equation in average cases.
 %   get all roots of a function usuing newton-raphson modified method
 % NOTE : the function is one variable function with name 'x'
