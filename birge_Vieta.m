@@ -8,7 +8,7 @@ fn = str2func(['@(x) ' S]);
 fntemp = fn;
 syms x;
 degree = 0;
-while fntemp ~= 0
+while vpa(fntemp) ~= 0
    fntemp = diff(fntemp,x);
    degree = degree+1;
 end
@@ -17,7 +17,7 @@ Ea = inf(upper,1);
 b = inf(upper,degree);
 c = inf(upper,degree-1);
 P(1) = p0;
-a = coeffs(fn,'All');
+a = coeffs(fn,x);
 for j =1:upper
      b(j,1)=a(1);
      c(j,1)=a(1);

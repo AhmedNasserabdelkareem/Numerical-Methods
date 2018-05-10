@@ -254,7 +254,7 @@ switch method
         legend("g(X)","F(X)");
         hideTwo(handles);
     case "4- Newton-Raphson"
-        [ fn,fx,error,iteration_no,excution_time,iteration,Xi,XiPlusOne,Fx,AbsErr ] = newton_Raphson( str2double(xLower),Eqs,str2double(iter),str2double(eps) );
+        [ fn,fx,error,iteration_no,excution_time,iteration,Xi,XiPlusOne,AbsErr ] = newton_Raphson( str2double(xLower),Eqs,str2double(iter),str2double(eps) );
         ezplot(fn);
         hold on;
         ezplot(fx);
@@ -268,7 +268,18 @@ switch method
         hold off;
          hideTwo(handles);
     case "5- Secant"
-        %call method bisection
+        [ error,fn,fx,iteration_no,excution_time,iteration,Xi,XiPlusOne,XiMinusOne,AbsErr ] = secant( str2double(xLower),str2double(xUpper),Eqs,str2double(iter),str2double(eps) );
+        ezplot(fn);
+        hold on;
+        ezplot(fx);
+        xL = xlim; 
+        yL = ylim; 
+        hold on;
+        line(xL, [0 0],'color','k','linewidth',1); 
+        line([0 0], yL,'color','k','linewidth',1); 
+     %   zoom on;
+        legend("F(X)","F'(X)");
+        hold off;
         hideTwo(handles);
     case "6- Bierge Vieta"
         %call method bisection  
