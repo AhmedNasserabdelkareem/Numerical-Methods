@@ -22,7 +22,7 @@ function varargout = untitled(varargin)
 
 % Edit the above text to modify the response to help untitled
 
-% Last Modified by GUIDE v2.5 07-May-2018 16:33:17
+% Last Modified by GUIDE v2.5 10-May-2018 15:46:51
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -122,23 +122,31 @@ function pushbutton2_Callback(hObject, eventdata, handles)
 global chosenMethod;
 global order;
 global points;
+global queries;
 global correspondingPoints ;
-global x =  get(handles.edit1,'String');
-global y =  get(handles.edit2,'String');
+ x =  get(handles.edit1,'String');
+ y =  get(handles.edit2,'String');
+ stringquery =  get(handles.edit3,'String');
 
 correspondingPoints=strsplit(y,',');
  
 points = strsplit(x,',');
-
-order= get(handles.edit3,'String');
-chosenMethod= get(handles.text6,'String');
+queries = strsplit(stringquery,',');
+order= get(handles.edit4,'String');
+chosenMethod= get(handles.text6,'String')
 %NASSER SWITCH DEPENED ON METHOD CHOSEN
-switch chosenMethod
-    case "1- Newton"
-        % execute newton here NASSER
-    case "2- Larange"
-          % execute larange here NASSER
-end
+
+         [f, results] = LagRange( str2double(order), str2double(points), str2double(correspondingPoints), str2double(queries) )
+        ezplot(f,-100,100);
+        xL = xlim;
+        yL = ylim;
+        line(xL, [0 0],'color','k','linewidth',1);
+        line([0 0], yL,'color','k','linewidth',1);
+        zoom on;
+        legend("F(X)","XLower","XUpper");
+        hold off;
+
+
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
@@ -238,3 +246,26 @@ err_message = msgbox('File is not chosen');
 end
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+
+
+
+function edit4_Callback(hObject, eventdata, handles)
+% hObject    handle to edit4 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit4 as text
+%        str2double(get(hObject,'String')) returns contents of edit4 as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function edit4_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit4 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
