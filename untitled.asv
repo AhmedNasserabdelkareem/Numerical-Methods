@@ -255,15 +255,15 @@ switch method
         hideTwo(handles);
     case "4- Newton-Raphson"
         [ fn,fx,error,iteration_no,excution_time,iteration,Xi,XiPlusOne,Fx,AbsErr ] = newton_Raphson( str2double(xLower),Eqs,str2double(iter),str2double(eps) );
-        ezplot(fn);
+        ezplot(fn,-5000,5000);
         hold on;
         ezplot(fx);
         xL = xlim; 
         yL = ylim; 
-        hold on;
+        hol
         line(xL, [0 0],'color','k','linewidth',1); 
         line([0 0], yL,'color','k','linewidth',1); 
-     %   zoom on;
+        zoom on;
         legend("F(X)","F'(X)");
         hold off;
          hideTwo(handles);
