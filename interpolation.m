@@ -110,7 +110,15 @@ end
 %NASSER SWITCH DEPENED ON METHOD CHOSEN
 switch chosenMethod
     case "1- Newton"
-     [ result,excution_time ] = newton_interpolation( str2double(points), str2double(correspondingPoints), str2double(queries)  )
+     [ result,excution_time,fn,answers ] = newton_interpolation( str2double(points), str2double(correspondingPoints), str2double(queries)  )
+        ezplot(fn,-100,100);
+        xL = xlim;
+        yL = ylim;
+        line(xL, [0 0],'color','k','linewidth',1);
+        line([0 0], yL,'color','k','linewidth',1);
+        zoom on;
+        legend("F(X)","XLower","XUpper");
+        hold off;
     case "2- Larange"
          [f, results] = LagRange( str2double(order), str2double(points), str2double(correspondingPoints), str2double(queries) )
         ezplot(f,-100,100);
