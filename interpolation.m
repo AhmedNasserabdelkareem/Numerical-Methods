@@ -104,6 +104,8 @@ points = strsplit(x,',');
 queries = strsplit(stringquery,',');
 order= get(handles.edit4,'String');
 chosenMethod= get(handles.text6,'String')
+fprintf('HI')
+
 %NASSER SWITCH DEPENED ON METHOD CHOSEN
 
          [f, results] = LagRange( str2double(order), str2double(points), str2double(correspondingPoints), str2double(queries) )

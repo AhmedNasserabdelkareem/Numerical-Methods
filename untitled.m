@@ -224,6 +224,10 @@ method =get(handles.text11,'String');
 switch method
     case "1- Bisection"
         [XL,XU,XR,ea,f] = bisection(Eqs , str2double(xLower), str2double(xUpper), str2double(eps), str2double(iter));
+        XL
+        XU
+        XR
+        ea
         ezplot(f);
         hold on;
         plot([XL(1) XL(1)], ylim);
