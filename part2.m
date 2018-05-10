@@ -22,7 +22,7 @@ function varargout = untitled(varargin)
 
 % Edit the above text to modify the response to help untitled
 
-% Last Modified by GUIDE v2.5 07-May-2018 15:34:43
+% Last Modified by GUIDE v2.5 07-May-2018 16:33:17
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -73,19 +73,22 @@ function varargout = untitled_OutputFcn(hObject, eventdata, handles)
 varargout{1} = handles.output;
 
 
-% --- Executes on selection change in listbox1.
-function listbox1_Callback(hObject, eventdata, handles)
-% hObject    handle to listbox1 (see GCBO)
+% --- Executes on selection change in listboxpart2.
+function listboxpart2_Callback(hObject, eventdata, handles)
+% hObject    handle to listboxpart2 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
-% Hints: contents = cellstr(get(hObject,'String')) returns listbox1 contents as cell array
-%        contents{get(hObject,'Value')} returns selected item from listbox1
+% index = get(hObject,'Value');
+% list = get(hObject,'String');
+% method = list{index}; 
+set(handles.text6,'String','iihjk');
+% Hints: contents = cellstr(get(hObject,'String')) returns listboxpart2 contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from listboxpart2
 
 
 % --- Executes during object creation, after setting all properties.
-function listbox1_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to listbox1 (see GCBO)
+function listboxpart2_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to listboxpart2 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 

@@ -356,12 +356,11 @@ set(handles.edit6,'enable','off');
 % --- Executes on button press in pushbutton4.
 function pushbutton4_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton4 (see GCBO)
-% SLOW STEPS NASSER and Variables required is Eqs , eps , iter and use
-% counter to handle step by step button
+% SLOW STEPS NASSER and Variables required is Eqs , eps , iter
 global Eqs ;
 global eps;
 global iter ;
-global counter ;
+global counter;
 x = get(handles.edit4,'String');
 xUpper = get(handles.edit5,'String');
 xLower = get(handles.edit6,'String');
