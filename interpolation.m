@@ -72,35 +72,6 @@ function varargout = interpolation_OutputFcn(hObject, eventdata, handles)
 varargout{1} = handles.output;
 
 
-% --- Executes on selection change in listboxpart2.
-function listboxpart2_Callback(hObject, eventdata, handles)
-% hObject    handle to listboxpart2 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-% index = get(hObject,'Value');
-% list = get(hObject,'String');
-% method = list{index}; 
-index = get(hObject,'Value');
-list = get(hObject,'String');
-method = list{index}; 
-set(handles.text6,'String',method);
-% Hints: contents = cellstr(get(hObject,'String')) returns listboxpart2 contents as cell array
-%        contents{get(hObject,'Value')} returns selected item from listboxpart2
-
-
-% --- Executes during object creation, after setting all properties.
-function listboxpart2_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to listboxpart2 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: listbox controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
-if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
-end
-
-
 % --- Executes on button press in pushbutton1.
 function pushbutton1_Callback(hObject, eventdata, handles)
 % [file,path] = uigetfile('*.m');
@@ -251,43 +222,6 @@ function listbox1_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
-
-
-% --- Executes on button press in pushbutton1.
-function pushbutton1_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton1 (see GCBO)
-global chosenMethod;
-global order;
-global points;
-global correspondingPoints ;
-x =  get(handles.edit1,'String');
-y =  get(handles.edit2,'String');
-chosenMethod = "1- Newton";
-correspondingPoints=strsplit(y,',');
- 
-points = strsplit(x,',');
-order= get(handles.edit3,'String');
-
-chosenMethod= get(handles.text2,'String');
-disp(chosenMethod)
-
-%NASSER SWITCH DEPENED ON METHOD CHOSEN
-switch chosenMethod
-    case "1- Newton"
-        % execute newton here NASSER
-    case "2- Larange"
-          % execute larange here NASSER
-end
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-
-% --- Executes on button press in pushbutton2.
-function pushbutton2_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton2 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
 
 
 function edit4_Callback(hObject, eventdata, handles)
