@@ -223,6 +223,7 @@ end;
 method =get(handles.text11,'String');
 switch method
     case "1- Bisection"
+        hideOne(handles);
         [XL,XU,XR,ea,f] = bisection(Eqs , str2double(xLower), str2double(xUpper), str2double(eps), str2double(iter));
         ezplot(f);
         hold on;
@@ -235,9 +236,11 @@ switch method
         line([0 0], yL,'color','k','linewidth',1);
         zoom out;
         legend("F(X)","XLower","XUpper");
-        %call method bisection
-        hideOne(handles);
+        hold off;
+        Data=[str2num(XL),str2num(XU)];
+        set(handles.uitable1,'data',Data);
     case "2- False-position"
+         hideOne(handles);
         [XL,XU,XR,ea,f] = falsePosition(Eqs,str2double(xLower), str2double(xUpper), str2double(eps), str2double(iter));
         ezplot(f,-100,100);
         hold on;
@@ -251,11 +254,12 @@ switch method
         zoom on;
         legend("F(X)","XLower","XUpper");
         hold off;
-        hideOne(handles);
+                Data=[(XL),(XU)];
+        set(handles.uitable1,'data',Data);
     case "3- Fixed point"
+        hideTwo(handles);
         %call method bisection
         [f, g, xNew, error] = FixedPoint (Eqs ,str2double(iter), str2double(eps), 0 );
-        clf;
         ezplot(f,-5000,5000);
         hold on;
         ezplot(g);
@@ -265,8 +269,11 @@ switch method
         line([0 0], yL,'color','k','linewidth',1);
         zoom on;
         legend("g(X)","F(X)");
-        hideTwo(handles);
+        hold off;
+                Data=[str2num(f),str2num(g)];
+        set(handles.uitable1,'data',Data);
     case "4- Newton-Raphson"
+         hideTwo(handles);
         [ fn,fx,error,iteration_no,excution_time,iteration,Xi,XiPlusOne,Fx,AbsErr ] = newton_Raphson( str2double(xLower),Eqs,str2double(iter),str2double(eps) );
         ezplot(fn);
         hold on;
@@ -279,8 +286,8 @@ switch method
      %   zoom on;
         legend("F(X)","F'(X)");
         hold off;
-         hideTwo(handles);
     case "5- Secant"
+        hideTwo(handles);
         [ error,fn,fx,iteration_no,excution_time,iteration,Xi,XiPlusOne,XiMinusOne,AbsErr ] = secant( str2double(xLower),str2double(xUpper),Eqs,str2double(iter),str2double(eps) );
         ezplot(fn);
         hold on;
@@ -293,7 +300,6 @@ switch method
      %   zoom on;
         legend("F(X)","F'(X)");
         hold off;
-        hideTwo(handles);
     case "6- Bierge Vieta"
         %call method bisection
         hideTwo(handles);

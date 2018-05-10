@@ -133,13 +133,13 @@ points = strsplit(x,',');
 queries = strsplit(stringquery,',');
 order= get(handles.edit4,'String');
 chosenMethod= get(handles.text6,'String')
-if(str2double(order) + 1 > length(str2double(points)) || length(str2double(points)) ~= length(str2double(correspondingPoints)))
+if(str2double(order) + 1 > length(str2double(points)) || )
    return; 
 end
 %NASSER SWITCH DEPENED ON METHOD CHOSEN
 switch chosenMethod
     case "1- Newton"
-     [ result,excution_time ] = newton_interpolation( str2double(points), str2double(correspondingPoints), str2double(queries)  )
+     [ result,excution_time ] = newton_interpolation( points )
     case "2- Larange"
          [f, results] = LagRange( str2double(order), str2double(points), str2double(correspondingPoints), str2double(queries) )
         ezplot(f,-100,100);
