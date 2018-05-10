@@ -385,16 +385,39 @@ end;
 
 method =get(handles.text11,'String');
 switch method
-    case "1- Bisection"
+  case "1- Bisection"
+        [XL,XU,XR,ea,f] = bisection(Eqs , str2double(xLower), str2double(xUpper), str2double(eps), str2double(iter));
+       cla;
+        ezplot(f);
+        hold on;
+        plot([XL(1) XL(1)], ylim);
+        hold on;
+        plot([XU(1) XU(1)], ylim);
+        xL = xlim; 
+        yL = ylim; 
+        line(xL, [0 0],'color','k','linewidth',1); 
+        line([0 0], yL,'color','k','linewidth',1); 
+        zoom on;
+        legend("F(X)","XLower","XUpper");
         %call method bisection
         hideOne(handles);
     case "2- False-position"
-        %call method bisection
+        [ iter,l,u,r,ea, f] = falsePosition(Eqs,xl,xu,es,imax)
          hideOne(handles);
     case "3- Fixed point"
         %call method bisection
-        hideTwo(handles);
-    case "4- Newton-Raphson"
+        [f, g, xNew, error] = FixedPoint (Eqs ,str2double(iter), str2double(eps), 0 );
+        clf;
+        ezplot(f,-5000,5000);
+        hold on;
+        ezplot(g);
+        xL = xlim; 
+        yL = ylim; 
+        line(xL, [0 0],'color','k','linewidth',1); 
+        line([0 0], yL,'color','k','linewidth',1); 
+        zoom on;
+        legend("g(X)","F(X)");
+        hideTwo(handles);    case "4- Newton-Raphson"
         %call method bisection
          hideTwo(handles);
     case "5- Secant"
