@@ -22,7 +22,7 @@ function varargout = untitled(varargin)
 
 % Edit the above text to modify the response to help untitled
 
-% Last Modified by GUIDE v2.5 11-May-2018 13:20:21
+% Last Modified by GUIDE v2.5 11-May-2018 13:25:38
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -239,7 +239,7 @@ end;
 method =get(handles.text11,'String');
 switch method
     case "1- Bisection"
-        [XL,XU,XR,ea,f,time] = bisection(Eqs , str2double(xLower), str2double(xUpper), str2double(eps), str2double(iter));
+        [XL,XU,XR,ea,f,time,error] = bisection(Eqs , str2double(xLower), str2double(xUpper), str2double(eps), str2double(iter));
         ezplot(f);
         hold on;
         plot([XL(1) XL(1)], ylim);
@@ -257,10 +257,11 @@ switch method
         temperror = cat(2,XR.',ea.');
         matrix = cat(2,tempo,temperror);
         set(handles.uitable1, 'columnname', {'Xr', 'Xl', 'Xr', 'ea'});
+        set(handles.errordisplay,'String',error);
         set(handles.uitable1,'Data',matrix);
     case "2- False-position"
-         [XL,XU,XR,ea,f,time] = falsePosition(Eqs,str2double(xLower), str2double(xUpper), str2double(eps), str2double(iter));
-         ezplot(f,-100,100);
+        [XL,XU,XR,ea,f,time,error] = falsePosition(Eqs,str2double(xLower), str2double(xUpper), str2double(eps), str2double(iter));
+        ezplot(f,-100,100);
         hold on;
         plot([XL(1) XL(1)], ylim);
         hold on;
@@ -273,6 +274,7 @@ switch method
         legend("F(X)","XLower","XUpper");
         hold off;
         set(handles.timedisplay,'String',time);
+        set(handles.errordisplay,'String',error);
         tempo = cat(2,XL.',XU.');
         temperror = cat(2,XR.',ea.');
         matrix = cat(2,tempo,temperror);
@@ -316,6 +318,7 @@ switch method
         set(handles.uitable1, 'columnname', {'Xi', 'Xi+1', 'Fx', 'error'});
         set(handles.uitable1,'Data',matrix);
         set(handles.timedisplay,'String',excution_time);
+        set(handles.errordisplay,'String',error);
     case "5- Secant"
         hideTwo(handles);
         [ root,error,fn,fx,iteration_no,excution_time,iteration,Xi,XiPlusOne,XiMinusOne,AbsErr ] = secant( str2double(xLower),str2double(xUpper),Eqs,str2double(iter),str2double(eps) );
@@ -337,11 +340,13 @@ switch method
         set(handles.uitable1, 'columnname', {'Xi', 'Xi+1', 'Fx', 'error'});
         set(handles.uitable1,'Data',matrix);
         set(handles.timedisplay,'String',excution_time);
-
+        set(handles.errordisplay,'String',error);
+        
+        
     case "6- Bierge Vieta"
         %call method bisection
         hideTwo(handles);
-    
+        
     case "7- General Algorithm"
         [roots,fn,time] = general( Eqs );
         ezplot(fn);
@@ -355,9 +360,9 @@ switch method
         line([0 0], yL,'color','k','linewidth',1);
         zoom on;
         legend("F(X)","F'(X)");
-       set(handles.timedisplay,'String',time);
+        set(handles.timedisplay,'String',time);
         hold off;
-            
+        
 end
 
 
@@ -488,7 +493,7 @@ switch method
             handles.flags(1) = 1;
             guidata(hObject,handles);
         end
-        [XL,XU,XR,ea,f,time] = bisection(Eqs , str2double(xLower), str2double(xUpper), str2double(eps), str2double(iter));
+        [XL,XU,XR,ea,f,time, error] = bisection(Eqs , str2double(xLower), str2double(xUpper), str2double(eps), str2double(iter));
         if(handles.index < length(XL))
             handles.index = handles.index + 1
             guidata(hObject,handles);
@@ -513,7 +518,8 @@ switch method
         temperror = cat(2,getVector(XR,handles.index).',getVector(ea,handles.index).');
         matrix = cat(2,tempo,temperror);
         set(handles.uitable1, 'columnname', {'Xr', 'Xl', 'Xr', 'ea'});
-        set(handles.uitable1,'Data',matrix);
+        set(handles.uitable1,'Data',matrix);   
+        set(handles.errordisplay,'String',error);
     case "2- False-position"
         if((handles.flags(2)) == 0)
             handles.index = 0
@@ -521,7 +527,7 @@ switch method
             handles.flags(2) = 1;
             guidata(hObject,handles);
         end
-        [XL,XU,XR,ea,f,time] = falsePosition(Eqs,str2double(xLower), str2double(xUpper), str2double(eps), str2double(iter));
+        [XL,XU,XR,ea,f,time,error] = falsePosition(Eqs,str2double(xLower), str2double(xUpper), str2double(eps), str2double(iter));
         if(handles.index < length(XL))
             handles.index = handles.index + 1
             guidata(hObject,handles);
@@ -546,7 +552,9 @@ switch method
         temperror = cat(2,getVector(XR,handles.index).',getVector(ea,handles.index).');
         matrix = cat(2,tempo,temperror);
         set(handles.uitable1, 'columnname', {'Xr', 'Xl', 'Xr', 'ea'});
-        set(handles.uitable1,'Data',matrix);
+        set(handles.uitable1,'Data',matrix);      
+        set(handles.errordisplay,'String',error);
+
     case "3- Fixed point"
         if((handles.flags(3)) == 0)
             handles.index = 0
@@ -583,7 +591,7 @@ switch method
             handles.flags(4) = 1;
             guidata(hObject,handles);
         end
-       [ root,fn,fx,error,iteration_no,excution_time,iteration,Xi,XiPlusOne,AbsErr ] = newton_Raphson( str2double(oneInput),Eqs,str2double(iter),str2double(eps) );
+        [ root,fn,fx,error,iteration_no,excution_time,iteration,Xi,XiPlusOne,AbsErr ] = newton_Raphson( str2double(oneInput),Eqs,str2double(iter),str2double(eps) );
         if(handles.index < length(XiPlusOne))
             handles.index = handles.index + 1
             guidata(hObject,handles);
@@ -622,6 +630,8 @@ switch method
         else
             return;
         end
+        
+        
         ezplot(fn);
         hold on;
         ezplot(fx);
@@ -676,18 +686,18 @@ end
 
 
 
-function ErrorDisplay_Callback(hObject, eventdata, handles)
-% hObject    handle to ErrorDisplay (see GCBO)
+function errordisplay_Callback(hObject, eventdata, handles)
+% hObject    handle to errordisplay (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% Hints: get(hObject,'String') returns contents of ErrorDisplay as text
-%        str2double(get(hObject,'String')) returns contents of ErrorDisplay as a double
+% Hints: get(hObject,'String') returns contents of errordisplay as text
+%        str2double(get(hObject,'String')) returns contents of errordisplay as a double
 
 
 % --- Executes during object creation, after setting all properties.
-function ErrorDisplay_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to ErrorDisplay (see GCBO)
+function errordisplay_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to errordisplay (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 

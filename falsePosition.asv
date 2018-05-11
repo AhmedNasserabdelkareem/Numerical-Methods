@@ -30,7 +30,7 @@ tic;
     end
     
     if(ea(i) > es)
-        error = ('zero not found for desired tolerance and number of iterations');
+        disp('zero not found for desired tolerance and number of iterations');
     end
 
     
