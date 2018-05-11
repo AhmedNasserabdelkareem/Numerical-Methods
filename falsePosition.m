@@ -6,7 +6,7 @@ tic;
       
     if(f(xu)*f(xl))> 0.0
         error = 'false-point method : no roots in iterval';
-        return
+        
     end
     
     for i = 1:1:imax
@@ -22,7 +22,7 @@ tic;
             xl = r(i);
         end
         if(i > 1)
-            ea(i) = abs(((r(i) - r(i-1))/(r(i))));
+            ea(i) = abs((r(i) - r(i-1)));
         end
         if ((i > 1) && (ea(i)< es) )
             disp('method has converged');break;

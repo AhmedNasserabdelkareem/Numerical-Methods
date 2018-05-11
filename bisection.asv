@@ -4,6 +4,7 @@ function [XL,XU,XR,ea,f, excution_time, error] = bisection(fx,xl,xu,es,imax)
         
     if(f(xu)*f(xl)) > 0 
         error = ('bisection method : no roots in interval');
+        return
     end
     
     for i = 1:1:imax

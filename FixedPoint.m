@@ -10,12 +10,7 @@ try
 catch
     return;
 end
-
-if (xNew ~= 0)
-    error(1) = abs((xNew(1) - xOld) / xNew(1)) * 100
-else
-    error(1) = 100000000;
-end
+    error(1) = abs((xNew(1) - xOld));
 iter = 1;
 iter_max = maxIteration;
 index = 2;
@@ -28,11 +23,7 @@ while error(index - 1) > tolerance && iter < iter_max
         return;
     end
     
-    if xNew(index) ~= 0
-        error(index) = abs((xNew(index) - xOld) / xNew(index)) * 100
-    else
-        error(index) = 100000000;
-    end
+        error(index) = abs((xNew(index) - xOld))
     
     if abs(xNew(index)) < 10^-200 | abs(xNew(index)) > 10^200
         break;
