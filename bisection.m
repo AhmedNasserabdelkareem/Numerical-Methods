@@ -19,10 +19,12 @@ function [XL,XU,XR,RelativeError,f, excution_time, error, absoluteError] = bisec
         end
         if(i == 1) 
             RelativeError(i) = 1000000000;
+                absoluteError(1) = 10000000;
         else 
             RelativeError(i) = abs((XR(i)-XR(i-1))/XR(i)); 
+                    absoluteError(i) = abs((XR(i)-XR(i-1))); 
+
         end
-        absoluteError(i) = abs((XR(i)-XR(i-1))); 
         if (test == 0)
             RelativeError(i)=0;
             absoluteError(i)=0;
