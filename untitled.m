@@ -22,7 +22,7 @@ function varargout = untitled(varargin)
 
 % Edit the above text to modify the response to help untitled
 
-% Last Modified by GUIDE v2.5 11-May-2018 23:43:42
+
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -262,7 +262,7 @@ switch method
         matrix2 = cat(2,matrix,absolute.');
         set(handles.uitable1, 'columnname', {'Xl', 'Xu', 'Xr', 'relative error', 'absolute error'});
         set(handles.uitable1,'Data',matrix2);
-        set(handles.timedisplay,'String',excution_time);
+        set(handles.timedisplay,'String',time);
         set(handles.errordisplay,'String',error);
     case "2- False-position"
         [XL,XU,XR,ea,f,time,error, absolute] = falsePosition(Eqs,str2double(xLower), str2double(xUpper), str2double(eps), str2double(iter));
@@ -286,7 +286,7 @@ switch method
         matrix2 = cat(2,matrix,absolute.');
         set(handles.uitable1, 'columnname', {'Xl', 'Xu', 'Xr', 'relative error', 'absolute error'});
         set(handles.uitable1,'Data',matrix2);
-                set(handles.timedisplay,'String',excution_time);
+                set(handles.timedisplay,'String',time);
         set(handles.errordisplay,'String',error);
     case "3- Fixed point"
         [f, g, xNew, error,time,Gx, absolute] = FixedPoint (Eqs ,str2double(iter), str2double(eps), str2double(oneInput) );
@@ -308,7 +308,7 @@ switch method
         set(handles.uitable1, 'columnname', {'g(xi)', 'Xnew', 'relative error','absolute error',char(g)});
         set(handles.timedisplay,'String',time);
         set(handles.uitable1,'Data',matrix2);
-        set(handles.timedisplay,'String',excution_time);
+        set(handles.timedisplay,'String',time);
         set(handles.errordisplay,'String',error);
     case "4- Newton-Raphson"
         [FX,root,fn,fx,error,iteration_no,excution_time,iteration,Xi,XiPlusOne,AbsErr,RelErr ] = newton_Raphson( str2double(oneInput),Eqs,str2double(iter),str2double(eps) );
@@ -592,7 +592,7 @@ switch method
         matrix2 = cat(2,matrix,getVector(absolute,handles.index).');
         set(handles.uitable1, 'columnname', {'Xl', 'XU', 'Xr', 'relative error', 'absolute error'});
         set(handles.uitable1,'Data',matrix2);   
-        set(handles.timedisplay,'String',excution_time);
+        set(handles.timedisplay,'String',time);
         set(handles.errordisplay,'String',error);
     case "2- False-position"
         if((handles.flags(2)) == 0)
@@ -629,7 +629,7 @@ switch method
         matrix2 = cat(2,matrix,getVector(absolute,handles.index).');
         set(handles.uitable1, 'columnname', {'Xl', 'XU', 'Xr', 'relative error','absolute error'});
         set(handles.uitable1,'Data',matrix2);      
-        set(handles.timedisplay,'String',excution_time);
+        set(handles.timedisplay,'String',time);
         set(handles.errordisplay,'String',error);
     case "3- Fixed point"
         if((handles.flags(3)) == 0)
@@ -663,7 +663,7 @@ switch method
 
         set(handles.uitable1, 'columnname', {'g(xi)', 'Xnew', 'relative error','absolute error',char(g)});
         set(handles.uitable1,'Data',matrix2);
-                set(handles.timedisplay,'String',excution_time);
+                set(handles.timedisplay,'String',time);
         set(handles.errordisplay,'String',error);
     case "4- Newton-Raphson"
         if((handles.flags(4)) == 0)
@@ -825,18 +825,18 @@ end
 
 
 
-function RootDisplay_Callback(hObject, eventdata, handles)
-% hObject    handle to RootDisplay (see GCBO)
+function rootdisplay_Callback(hObject, eventdata, handles)
+% hObject    handle to rootdisplay (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% Hints: get(hObject,'String') returns contents of RootDisplay as text
-%        str2double(get(hObject,'String')) returns contents of RootDisplay as a double
+% Hints: get(hObject,'String') returns contents of rootdisplay as text
+%        str2double(get(hObject,'String')) returns contents of rootdisplay as a double
 
 
 % --- Executes during object creation, after setting all properties.
-function RootDisplay_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to RootDisplay (see GCBO)
+function rootdisplay_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to rootdisplay (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 

@@ -8,7 +8,9 @@ tic;
         error = 'false-point method : no roots in iterval';
         
     end
-    
+    absoluteError(1) = 1000000000000;
+        relativeError(1) = 1000000000000;
+
     for i = 1:1:imax
         l(i)= xl;
         u(i) = xu;
