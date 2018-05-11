@@ -87,11 +87,11 @@ global queryPts ;
 
 switch chosenMethod
     case 1
-     [ result,excution_time,fn,answers ] = newton_interpolation( (points), (correspondingPoints), (queryPts), order  )
+     [ result,excution_time,fn,answers ] = newton_interpolation( (points), (correspondingPoints), (queryPts)  )
         ezplot(fn,[-100,100,-100,100]);
         hold on;
-        scatter(str2double(points), str2double(correspondingPoints));     
-        tempo = double(cat(2, str2double(queries).', answers.'));
+        scatter((points), (correspondingPoints));     
+        tempo = double(cat(2, (queryPts).', double(answers).'));
          set(handles.functionDisplay,'String',char(fn));
         set(handles.timeDisplay,'String',(excution_time));
         set(handles.uitable1, 'columnname', {'query', 'result'});
@@ -104,15 +104,15 @@ switch chosenMethod
         legend("F(X)","Points");
         hold off;        
     case 2
-        [f, results,time] = LagRange( str2double(order), str2double(points), str2double(correspondingPoints), str2double(queries) )
-        tempo = double(cat(2, str2double(queries).', results.'));
+        [f, results,time] = LagRange( (order), (points), (correspondingPoints), (queryPts) )
+        tempo = double(cat(2, (queryPts).', results.'));
         set(handles.timeDisplay,'String',(time));
         set(handles.functionDisplay,'String',char(f));
         set(handles.uitable1, 'columnname', {'query', 'result'});
         set(handles.uitable1,'Data',tempo);
         ezplot(f,[-100,100,-100,100]);
         hold on;
-        scatter(str2double(points), str2double(correspondingPoints))
+        scatter((points), (correspondingPoints))
         xL = xlim;
         yL = ylim;
         line(xL, [0 0],'color','k','linewidth',1);
@@ -148,7 +148,7 @@ end
 %NASSER SWITCH DEPENED ON METHOD CHOSEN
 switch chosenMethod
     case "1- Newton"
-     [ result,excution_time,fn,answers ] = newton_interpolation( str2double(points), str2double(correspondingPoints), str2double(queries)  )
+     [ result,excution_time,fn,answers ] = newton_interpolation(  str2double(points), str2double(correspondingPoints), str2double(queries))
         ezplot(fn,[-100,100,-100,100]);
         hold on;
         scatter(str2double(points), str2double(correspondingPoints));     

@@ -84,17 +84,42 @@ global queryPts ;
 [baseName, folder] = uigetfile();
 [ chosenMethod, order ,points, correspondingPoints, queryPts] = parsePart2( baseName )
 
-  set(handles.edit1,'String',points);
-  set(handles.edit4,'String', queryPts);
-  set(handles.edit2,'String', correspondingPoint);
-  set(handles.edit3,'String', order);
 
 switch chosenMethod
     case 1
-        set(handles.text2,'String', "1- Newton");    
+     [ result,excution_time,fn,answers ] = newton_interpolation( (points), (correspondingPoints), (queryPts), order  )
+        ezplot(fn,[-100,100,-100,100]);
+        hold on;
+        scatter((points), (correspondingPoints));     
+        tempo = double(cat(2, (queries).', answers.'));
+         set(handles.functionDisplay,'String',char(fn));
+        set(handles.timeDisplay,'String',(excution_time));
+        set(handles.uitable1, 'columnname', {'query', 'result'});
+        set(handles.uitable1,'Data',tempo);
+        xL = xlim;
+        yL = ylim;
+        line(xL, [0 0],'color','k','linewidth',1);
+        line([0 0], yL,'color','k','linewidth',1);
+        zoom on;
+        legend("F(X)","Points");
+        hold off;        
     case 2
-        set(handles.text2,'String', "2-Larange");
-
+        [f, results,time] = LagRange( str2double(order), str2double(points), str2double(correspondingPoints), str2double(queries) )
+        tempo = double(cat(2, str2double(queries).', results.'));
+        set(handles.timeDisplay,'String',(time));
+        set(handles.functionDisplay,'String',char(f));
+        set(handles.uitable1, 'columnname', {'query', 'result'});
+        set(handles.uitable1,'Data',tempo);
+        ezplot(f,[-100,100,-100,100]);
+        hold on;
+        scatter(str2double(points), str2double(correspondingPoints))
+        xL = xlim;
+        yL = ylim;
+        line(xL, [0 0],'color','k','linewidth',1);
+        line([0 0], yL,'color','k','linewidth',1);
+        zoom on;
+        legend("F(X)","Points");
+        hold off;
 end
 
 
