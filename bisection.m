@@ -1,11 +1,10 @@
-function [XL,XU,XR,ea,f, excution_time, error] = bisection(fx,xl,xu,es,imax)
+function [XL,XU,XR,RelativeError,f, excution_time, error, absoluteError] = bisection(fx,xl,xu,es,imax)
   tic;   
     f = str2func(['@(x)' vectorize(char(fx))]);
-        
+        error="";
     if(f(xu)*f(xl)) > 0 
         error = ('bisection method : no roots in interval');
     end
-    
     for i = 1:1:imax
         XU (i) = xu;
         XL (i) = xl;
@@ -19,19 +18,22 @@ function [XL,XU,XR,ea,f, excution_time, error] = bisection(fx,xl,xu,es,imax)
             xl=xr;
         end
         if(i == 1) 
-            ea(i) = 1000000000;
+            RelativeError(i) = 1000000000;
         else 
-            ea(i) = abs((XR(i)-XR(i-1))); 
+            RelativeError(i) = abs((XR(i)-XR(i-1))/XR(i)); 
         end
+        absoluteError(i) = abs((XR(i)-XR(i-1))); 
         if (test == 0)
-            ea(i)=0;
+            RelativeError(i)=0;
+            absoluteError(i)=0;
+
         end
-        if (ea (i) < es)
+        if (absoluteError (i) < es)
             break;
         end
     end
     
-    if(ea(length(ea)) > es)
+    if(absoluteError(length(RelativeError)) > es)
         error = ('method can not find the root for specified number of iterabtions ');
     end
     %s=sprintf('\n Root= %f #Iterations = %d \n', xr,i);

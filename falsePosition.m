@@ -1,9 +1,9 @@
-function [l,u,r,ea, f,excution_time, error] = falsePosition(func,xl,xu,es,imax)
+function [l,u,r,relativeError, f,excution_time, error, absoluteError] = falsePosition(func,xl,xu,es,imax)
 %using known false position method to find a root inside some interval
 tic;
     f = str2func(['@(x)' vectorize(char(func))]);
 
-      
+     error=""; 
     if(f(xu)*f(xl))> 0.0
         error = 'false-point method : no roots in iterval';
         
@@ -22,14 +22,15 @@ tic;
             xl = r(i);
         end
         if(i > 1)
-            ea(i) = abs((r(i) - r(i-1)));
+        relativeError(i) = abs(((r(i) - r(i-1))/(r(i))));
+        absoluteError(i) = abs(((r(i) - r(i-1))));
         end
-        if ((i > 1) && (ea(i)< es) )
+        if ((i > 1) && (absoluteError(i)< es) )
             disp('method has converged');break;
         end
     end
     
-    if(ea(i) > es)
+    if(absoluteError(i) > es)
         error = ('zero not found for desired tolerance and number of iterations');
     end
 

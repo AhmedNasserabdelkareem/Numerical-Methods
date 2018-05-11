@@ -1,4 +1,4 @@
-function [f, g, xNew, error, excution_time] = Untitled(equation ,maxIteration, tolerance, initialPoint )
+function [f, g, xNew, relativeError, excution_time,Gx, absoluteError] = Untitled(equation ,maxIteration, tolerance, initialPoint )
 tic;
 S = vectorize(char(equation)); %str = x^2-6*x
 f = str2func(['@(x) ' S]);
@@ -10,11 +10,13 @@ try
 catch
     return;
 end
-    error(1) = abs((xNew(1) - xOld));
+    relativeError(1) = abs((xNew(1) - xOld))/xNew(1);
+    absoluteError(1) = abs(f(xNew(1)) - 0);
+
 iter = 1;
 iter_max = maxIteration;
 index = 2;
-while error(index - 1) > tolerance && iter < iter_max
+while absoluteError(index - 1) > tolerance && iter < iter_max
     xOld = xNew(index - 1);
     
     try
@@ -23,8 +25,8 @@ while error(index - 1) > tolerance && iter < iter_max
         return;
     end
     
-        error(index) = abs((xNew(index) - xOld))
-    
+        relativeError(index) = abs((xNew(index) - xOld))/xNew(index);
+    absoluteError(index) = abs((xNew(index) - xOld));
     if abs(xNew(index)) < 10^-200 | abs(xNew(index)) > 10^200
         break;
     end
@@ -34,7 +36,9 @@ while error(index - 1) > tolerance && iter < iter_max
     index = index + 1;
 end
     excution_time = toc;
-
+for i = 1:length(xNew)
+    Gx(i) = vpa(g(xNew(i)));
+end
 end
 
 

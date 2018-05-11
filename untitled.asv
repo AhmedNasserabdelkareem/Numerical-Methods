@@ -406,61 +406,55 @@ global Eqs ;
 global eps;
 global method;
 global points;
- global iter;
+global iter;
 [baseName, folder] = uigetfile();
-% 
-% try
-% fullFileName = fullfile(folder, baseName);
-% A  = Read(fullFileName);
-% method = A{1};
-% Eqs = A{2};
-% points = A{3};
-% eps = A{4};
-% iter = A{5};
-% newStr = extractBetween(points,"[","]");
-% points =  strsplit(newStr,' ');
-% xUpper = points(1,1);
-% xLower = points(1,2);
-% 
-% catch
-% err_message = msgbox('File is not chosen') ;
-% end
-[method,Eqs,points,eps,iter] = parsePart1(baseName)
+
+try
+fullFileName = fullfile(folder, baseName);
+A  = Read(fullFileName);
+method = A{1};
+Eqs = A{2};
+points = A{3};
+eps = A{4};
+iter = A{5};
+newStr = extractBetween(points,"[","]");
+points =  strsplit(newStr,' ');
+xUpper = points(1,1);
+xLower = points(1,2);
+
+catch
+err_message = msgbox('File is not chosen') ;
+end
 disp(method);
 disp(Eqs);
 disp(points);
 disp(eps);
 disp(iter);
-  set(handles.edit4,'String',Eqs);
-  set(handles.edit5,'String',points(1,1));
-  set(handles.edit6,'String',points(1,2));
-  set(handles.edit7,'String',points(1,1));
-
-  set(handles.edit3,'String',eps);
-  set(handles.edit2,'String',iter);
 
 % method =get(handles.text11,'String');
 switch method
-    case 1
+    case '1'
         set(handles.text11,'String',"1- Bisection");    
-    case 2
+    case '2'
         set(handles.text11,'String',"2- False-position");
 
-    case 3
+    case "3"
       set(handles.text11,'String',"3- Fixed point");
 
-    case 4
-       set(handles.text11,'String',"4- Newton-Raphson");
+    case "4"
+       set(handles.text11,'String',method);
 
-    case 5
-       set(handles.text11,'String',"5- Secant");
+    case "5"
+       set(handles.text11,'String',method);
 
-    case 6
-       set(handles.text11,'String',"6- Bierge Vieta");
-       
-    case 7
-       set(handles.text11,'String',"7- General Algorithm");
+    case "6"
+       set(handles.text11,'String',method);
 
+        
+    case "7"
+       set(handles.text11,'String',method);
+
+        
 end
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)

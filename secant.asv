@@ -24,7 +24,7 @@ for i = 1:upper
       error = 1;
       break;
    end     
-   xnew=xold1-(fnold1*(xold1-xold0)/(fnold1-fnold0));
+   xnew=xold1-fnold1*(xold1-xold0)/(fnold1-fnold0);
    Xiold0(i) = xold0;
    Xiold1(i) = xold1;
    Xinew(i) = vpa(xnew);
@@ -33,7 +33,7 @@ for i = 1:upper
    else
        Er(i) = abs((vpa(xnew)-xold1)/vpa(xnew));
    end
-   Ea(i) = abs((vpa(xnew)-xold1));
+   Ea = 
    xold0=xold1;
    xold1=vpa(xnew);
 end    
