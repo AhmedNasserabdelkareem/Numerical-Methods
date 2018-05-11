@@ -30,11 +30,11 @@ for j =1:upper
     for i = 1:(degree-2)
         c(j,i+1)=P(j)*c(j,i)+b(j,i+1);
     end
-    P(j+1)=P(j)-(b(j,4)/c(j,3));
-    if c(j,3) == 0
+    if c(j,degree-1) == 0
        error = 1;
        break;
-    end    
+    end
+    P(j+1)=P(j)-(b(j,degree)/c(j,degree-1));
     if(j>1)
         if P(j+1) == 0
         error = 1;
@@ -48,6 +48,9 @@ for j =1:upper
 end
 iteration_no =j;
 iterations = 1:j;
+if Ea(j)>Ea(1)
+    error = 1;
+end    
 X = P;
 A = a;
 B = b;
