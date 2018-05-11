@@ -408,23 +408,6 @@ global method;
 global points;
  global iter;
 [baseName, folder] = uigetfile();
-% 
-% try
-% fullFileName = fullfile(folder, baseName);
-% A  = Read(fullFileName);
-% method = A{1};
-% Eqs = A{2};
-% points = A{3};
-% eps = A{4};
-% iter = A{5};
-% newStr = extractBetween(points,"[","]");
-% points =  strsplit(newStr,' ');
-% xUpper = points(1,1);
-% xLower = points(1,2);
-% 
-% catch
-% err_message = msgbox('File is not chosen') ;
-% end
 [method,Eqs,points,eps,iter] = parsePart1(baseName)
 disp(method);
 disp(Eqs);
