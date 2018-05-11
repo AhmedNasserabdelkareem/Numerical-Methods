@@ -22,7 +22,7 @@ function varargout = untitled(varargin)
 
 % Edit the above text to modify the response to help untitled
 
-% Last Modified by GUIDE v2.5 11-May-2018 23:27:45
+
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -64,7 +64,9 @@ handles.index = index;
 guidata(hObject,handles);
 flags = zeros(6,1);
 handles.flags = flags;
-set(handles.axes1,'XLimMode','manual','YLimMode','manual');
+set(handles.axes3,'XLimMode','manual','YLimMode','manual');
+set(handles.axes3,'XLim',[0 100]);
+set(handles.axes3,'YLim',[0 100]);
 
 
 % Update handles structure
@@ -235,7 +237,7 @@ end;
 if (iterations=="")
     iter=num2str(50);
 end;
-
+disp('Haha');
 
 method =get(handles.text11,'String');
 switch method
@@ -248,7 +250,7 @@ switch method
         plot([XU(1) XU(1)], ylim);
         xL = xlim;
         yL = ylim;
-        line(xL, [0 0],'color','k','linewidth',1);
+       line(xL, [0 0],'color','k','linewidth',1);
         line([0 0], yL,'color','k','linewidth',1);
         zoom out;
         legend("F(X)","XLower","XUpper");
@@ -607,6 +609,7 @@ switch method
             return;
         end
         ezplot(f);
+       % axis([0 50 50 -50]);
         hold on;
         plot([XL(handles.index) XL(handles.index)], ylim);
         hold on;
@@ -841,4 +844,26 @@ function rootdisplay_CreateFcn(hObject, eventdata, handles)
 %       See ISPC and COMPUTER.
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on slider movement.
+function slider2_Callback(hObject, eventdata, handles)
+% hObject    handle to slider2 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'Value') returns position of slider
+%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
+
+
+% --- Executes during object creation, after setting all properties.
+function slider2_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to slider2 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: slider controls usually have a light gray background.
+if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor',[.9 .9 .9]);
 end
