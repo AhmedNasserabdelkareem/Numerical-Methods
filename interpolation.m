@@ -78,6 +78,34 @@ function pushbutton1_Callback(hObject, eventdata, handles)
 % if isequal(file,0)
 %    disp('User selected Cancel');
 % else
+global Eqs ;
+global eps;
+global method;
+global points;
+global iter;
+[baseName, folder] = uigetfile();
+
+try
+fullFileName = fullfile(folder, baseName);
+A  = Read(fullFileName);
+method = A{1};
+Eqs = A{2};
+points = A{3};
+eps = A{4};
+iter = A{5};
+newStr = extractBetween(points,"[","]");
+points =  strsplit(newStr,' ');
+xUpper = points(1,1);
+xLower = points(1,2);
+
+catch
+err_message = msgbox('File is not chosen') ;
+end
+disp(method);
+disp(Eqs);
+disp(points);
+disp(eps);
+disp(iter);
 %    disp(['User selected ', fullfile(path,file)]);
 % end
 % hObject    handle to pushbutton1 (see GCBO)
