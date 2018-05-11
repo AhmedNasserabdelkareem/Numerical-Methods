@@ -285,10 +285,11 @@ switch method
         zoom on;
         legend("F(X)","XLower","XUpper");
         hold off;
-
-        tempo = cat(2,XL.',XU.');
+        tempo = cIat(2,XL.',XU.');
         temperror = cat(2,XR.',ea.');
         matrix = cat(2,tempo,temperror);
+        axes(handles.axes1,'HI',tempo);
+
         set(handles.uitable1, 'columnname', {'Xr', 'Xl', 'Xr', 'ea'});
         set(handles.uitable1,'Data',matrix);
     case "3- Fixed point"
@@ -364,6 +365,9 @@ switch method
         legend("F(X)","F'(X)");
         hold off;
         hideTwo(handles);
+         tempo = cat(2,roots.',fn.');
+        set(handles.uitable1, 'columnname', {'roots', 'Fn'});
+        set(handles.uitable1,'Data',tempo);
             
 end
 
