@@ -279,6 +279,8 @@ switch method
         tempo = cat(2,XL.',XU.');
         temperror = cat(2,XR.',ea.');
         matrix = cat(2,tempo,temperror);
+        axes(handles.axes1,'HI',tempo);
+
         set(handles.uitable1, 'columnname', {'Xr', 'Xl', 'Xr', 'ea'});
         set(handles.uitable1,'Data',matrix);
     case "3- Fixed point"
@@ -357,6 +359,14 @@ switch method
         zoom on;
         legend("F(X)","F'(X)");
         hold off;
+<<<<<<< HEAD
+=======
+        hideTwo(handles);
+         tempo = cat(2,roots.',fn.');
+        set(handles.uitable1, 'columnname', {'roots', 'Fn'});
+        set(handles.uitable1,'Data',tempo);
+            
+>>>>>>> 962e22d3f1859a081db6cac7f6fbbf0c36a7e843
         
     case "7- General Algorithm"
         [roots,fn,time] = general( Eqs );
