@@ -212,6 +212,7 @@ function pushbutton2_Callback(hObject, eventdata, handles)
 global Eqs ;
 global eps;
 global iter ;
+oneInput = get(handles.edit7,'String');
 x = get(handles.edit4,'String');
 xUpper = get(handles.edit5,'String');
 xLower = get(handles.edit6,'String');
@@ -281,8 +282,7 @@ switch method
         set(handles.uitable1, 'columnname', {'Xr', 'Xl', 'Xr', 'ea'});
         set(handles.uitable1,'Data',matrix);
     case "3- Fixed point"
-        %call method bisection
-        [f, g, xNew, error,time] = FixedPoint (Eqs ,str2double(iter), str2double(eps), str2double(x) );
+        [f, g, xNew, error,time] = FixedPoint (Eqs ,str2double(iter), str2double(eps), str2double(oneInput) );
         ezplot(f,-5000,5000);
         hold on;
         ezplot(g);
@@ -300,7 +300,7 @@ switch method
         set(handles.timedisplay,'String',time);
         set(handles.uitable1,'Data',matrix);
     case "4- Newton-Raphson"
-        [ root,fn,fx,error,iteration_no,excution_time,iteration,Xi,XiPlusOne,AbsErr ] = newton_Raphson( str2double(x),Eqs,str2double(iter),str2double(eps) );
+        [ root,fn,fx,error,iteration_no,excution_time,iteration,Xi,XiPlusOne,AbsErr ] = newton_Raphson( str2double(oneInput),Eqs,str2double(iter),str2double(eps) );
         ezplot(fn);
         hold on;
         ezplot(fx);
@@ -344,7 +344,7 @@ switch method
         
         
     case "6- Bierge Vieta"
-        [ error,root,fn,fx,iteration_no,iterations,excution_time,X,A,B,C,AbsErr ] = birge_Vieta( str2double(x),Eqs,str2double(iter),str2double(eps) );
+        [ error,root,fn,fx,iteration_no,iterations,excution_time,X,A,B,C,AbsErr ] = birge_Vieta( str2double(oneInput),Eqs,str2double(iter),str2double(eps) );
         set(handles.TimeDisplay,'String',excution_time);
         ezplot(fn);
         hold on;
@@ -357,7 +357,6 @@ switch method
         zoom on;
         legend("F(X)","F'(X)");
         hold off;
-        hideTwo(handles);
         
     case "7- General Algorithm"
         [roots,fn,time] = general( Eqs );
@@ -642,8 +641,6 @@ switch method
         else
             return;
         end
-        
-        
         ezplot(fn);
         hold on;
         ezplot(fx);
@@ -667,7 +664,32 @@ switch method
         set(handles.uitable1, 'columnname', {'Xi', 'Xi+1','Xi - 1','Abs Error'});
         set(handles.uitable1,'Data',matrix);
     case "6- Bierge Vieta"
-        %call method bisection
+         if((handles.flags(6)) == 0)
+            handles.index = 0
+            handles.flags =zeros(6,1);
+            handles.flags(6) = 1;
+            guidata(hObject,handles);
+        end
+
+        [ error,root,fn,fx,iteration_no,iterations,excution_time,X,A,B,C,AbsErr ] = birge_Vieta( str2double(oneInput),Eqs,str2double(iter),str2double(eps) );
+        if(handles.index < length(X))
+            handles.index = handles.index + 1
+            guidata(hObject,handles);
+        else
+            return;
+        end
+        set(handles.TimeDisplay,'String',excution_time);
+        ezplot(fn);
+        hold on;
+        ezplot(fx);
+        xL = xlim;
+        yL = ylim;
+        hold on;
+        line(xL, [0 0],'color','k','linewidth',1);
+        line([0 0], yL,'color','k','linewidth',1);
+        zoom on;
+        legend("F(X)","F'(X)");
+        hold off;
         
 end
 % eventdata  reserved - to be defined in a future version of MATLAB
