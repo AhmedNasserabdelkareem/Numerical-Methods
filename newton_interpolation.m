@@ -1,6 +1,6 @@
-function [ result,excution_time,fn, answers ] = newton_interpolation( points , correspondingPoints, queries)
+function [ result,excution_time,fn, answers ] = newton_interpolation( points , correspondingPoints, queries, order)
 tic;
-pointsSize = length(points);
+pointsSize = length(order) + 1;
 result = zeros(pointsSize, pointsSize+1);
 for i = 1:pointsSize
     result(i,1) = points(i);
