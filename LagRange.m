@@ -1,6 +1,6 @@
-function [f, results] = Untitled( order, points, values, queries )
+function [f, results,excution_time] = Untitled( order, points, values, queries )
 %UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
+tic;
 syms x
 f(x)=0*x;
 syms x
@@ -25,7 +25,7 @@ for i = 1:order+1
        f(x) = f + 1000000*values(i);         
      end
 end
-
+excution_time = toc;
 for i=1:length(queries)
 results(i) = vpa(f(queries(i)))
 end

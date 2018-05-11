@@ -26,8 +26,10 @@ for i = 2:pointsSize
 end
 fn = simplify(fn);
 excution_time = toc;
-for i = 1:length(queries)
-    answer(i) = fn(queries(i));
+
+for i=1:length(queries)
+answers(i) = vpa(subs(fn,x,queries(i)));
+end
 
 
 end

@@ -1,8 +1,8 @@
-function [roots, fn] = general( func )
+function [roots, fn,excution_time] = general( func )
 %general get all the roots of an equation in average cases.
 %   get all roots of a function usuing newton-raphson modified method
 % NOTE : the function is one variable function with name 'x'
-
+tic;
 fn = sym(str2func(['@(x) ' vectorize(char(func))]));
 tolerance = .0001;
 syms x;
@@ -56,6 +56,7 @@ while(numOfRoots ~= 0 && maxIter ~= 0 )
         f = poly2sym(q);
         
     end
+    excution_time = toc;
     maxIter = maxIter - 1;
     disp('roots');
     disp(roots);

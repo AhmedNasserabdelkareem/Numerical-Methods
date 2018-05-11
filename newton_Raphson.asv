@@ -1,4 +1,4 @@
-function [ Fx,root,fn,fx,error,iteration_no,excution_time,iteration,Xi,XiPlusOne,AbsErr ] = newton_Raphson( x0,str,upper,tolerance )
+function [ root,fn,fx,error,iteration_no,excution_time,iteration,Xi,XiPlusOne,AbsErr ] = newton_Raphson( x0,str,upper,tolerance )
 %finds root of a function.
 %Given an initial point and the function, this function will find the
 %nearest root using the newton raphson method.
@@ -10,7 +10,6 @@ fn = str2func(['@(x) ' S]);
 Xiold = inf(upper,1);
 Xinew = inf(upper,1);
 Ea = inf(upper,1);
-Fx = inf(upper,1);
 for i = 1:upper
    syms x;
    fx = diff(fn,x);
@@ -22,16 +21,15 @@ for i = 1:upper
    %x = xi;
    fnVal = subs(fn,x,xi);
    fxVal = subs(fx,x,xi);
-   Fx(i) = fxVal;
    xnew = xi - (fnVal/fxVal);
    xnew = vpa(xnew);
    Xiold(i) = xi;
    Xinew(i) =vpa(xnew);
-%    if(xnew ~= 0)
-%    test = ((abs(vpa(xnew)-xi)/vpa(xnew)));
-%    else
-%        test = 100000;
-%    end
+   if(xnew ~= 0)
+   test = ((abs(vpa(xnew)-xi)/vpa(xnew)));
+   else
+       test = 100000;
+   end
    Ea(i) = (abs(vpa(xnew)-xi));
    if ((abs(vpa(xnew)-xi))<=tolerance)
        break;
