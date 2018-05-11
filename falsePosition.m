@@ -1,6 +1,6 @@
-function [l,u,r,ea, f] = falsePosition(func,xl,xu,es,imax)
+function [l,u,r,ea, f,excution_time] = falsePosition(func,xl,xu,es,imax)
 %using known false position method to find a root inside some interval
-%   it is used to find odd number of roots inside some interval
+tic;
     f = str2func(['@(x)' vectorize(char(func))]);
 
       
@@ -35,6 +35,7 @@ function [l,u,r,ea, f] = falsePosition(func,xl,xu,es,imax)
 
     
     
+    excution_time = toc;
 
 end
 

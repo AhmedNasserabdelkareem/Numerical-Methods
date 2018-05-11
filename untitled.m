@@ -252,7 +252,7 @@ method =get(handles.text11,'String');
 switch method
     case "1- Bisection"
         hideOne(handles);
-        [XL,XU,XR,ea,f] = bisection(Eqs , str2double(xLower), str2double(xUpper), str2double(eps), str2double(iter));
+        [XL,XU,XR,ea,f,time] = bisection(Eqs , str2double(xLower), str2double(xUpper), str2double(eps), str2double(iter));
         ezplot(f);
         hold on;
         plot([XL(1) XL(1)], ylim);
@@ -272,7 +272,7 @@ switch method
         set(handles.uitable1,'Data',matrix);
     case "2- False-position"
          hideOne(handles);
-         [XL,XU,XR,ea,f] = falsePosition(Eqs,str2double(xLower), str2double(xUpper), str2double(eps), str2double(iter));
+         [XL,XU,XR,ea,f,time] = falsePosition(Eqs,str2double(xLower), str2double(xUpper), str2double(eps), str2double(iter));
          ezplot(f,-100,100);
         hold on;
         plot([XL(1) XL(1)], ylim);
@@ -294,7 +294,7 @@ switch method
     case "3- Fixed point"
         hideTwo(handles);
         %call method bisection
-        [f, g, xNew, error] = FixedPoint (Eqs ,str2double(iter), str2double(eps), 0 );
+        [f, g, xNew, error,time] = FixedPoint (Eqs ,str2double(iter), str2double(eps), 0 );
         ezplot(f,-5000,5000);
         hold on;
         ezplot(g);
@@ -353,7 +353,7 @@ switch method
         hideTwo(handles);
     
     case "7- General algorithm"
-        [roots,fn] = general( Eqs );
+        [roots,fn,time] = general( Eqs );
         ezplot(fn);
         xL = xlim;
         yL = ylim;
@@ -493,7 +493,7 @@ switch method
             handles.flags(1) = 1;
             guidata(hObject,handles);
         end
-        [XL,XU,XR,ea,f] = bisection(Eqs , str2double(xLower), str2double(xUpper), str2double(eps), str2double(iter));
+        [XL,XU,XR,ea,f,time] = bisection(Eqs , str2double(xLower), str2double(xUpper), str2double(eps), str2double(iter));
         if(handles.index < length(XL))
             handles.index = handles.index + 1
             guidata(hObject,handles);
@@ -519,7 +519,7 @@ switch method
             handles.flags(2) = 1;
             guidata(hObject,handles);
         end
-        [XL,XU,XR,ea,f] = falsePosition(Eqs,str2double(xLower), str2double(xUpper), str2double(eps), str2double(iter));
+        [XL,XU,XR,ea,f,time] = falsePosition(Eqs,str2double(xLower), str2double(xUpper), str2double(eps), str2double(iter));
         if(handles.index < length(XL))
             handles.index = handles.index + 1
             guidata(hObject,handles);
@@ -545,7 +545,7 @@ switch method
             handles.flags(3) = 1;
             guidata(hObject,handles);
         end
-        [f, g, xNew, error] = FixedPoint (Eqs ,str2double(iter), str2double(eps), str2double(x) );
+        [f, g, xNew, error,time] = FixedPoint (Eqs ,str2double(iter), str2double(eps), str2double(x) );
         if(handles.index < length(xNew))
             handles.index = handles.index + 1
             guidata(hObject,handles);

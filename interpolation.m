@@ -111,24 +111,37 @@ end
 switch chosenMethod
     case "1- Newton"
      [ result,excution_time,fn,answers ] = newton_interpolation( str2double(points), str2double(correspondingPoints), str2double(queries)  )
-        ezplot(fn);
-        fn
+        ezplot(fn,[-100,100,-100,100]);
+        hold on;
+        scatter(str2double(points), str2double(correspondingPoints));     
+        tempo = double(cat(2, str2double(queries).', answers.'));
+         set(handles.functionDisplay,'String',char(fn));
+        set(handles.timeDisplay,'String',(excution_time));
+        set(handles.uitable1, 'columnname', {'query', 'result'});
+        set(handles.uitable1,'Data',tempo);
         xL = xlim;
         yL = ylim;
         line(xL, [0 0],'color','k','linewidth',1);
         line([0 0], yL,'color','k','linewidth',1);
         zoom on;
-        legend("F(X)","XLower","XUpper");
+        legend("F(X)","Points");
         hold off;
-    case "2- Larange"
-         [f, results] = LagRange( str2double(order), str2double(points), str2double(correspondingPoints), str2double(queries) )
-        ezplot(f,-100,100);
+    case "2-Larange"
+         [f, results,time] = LagRange( str2double(order), str2double(points), str2double(correspondingPoints), str2double(queries) )
+        tempo = double(cat(2, str2double(queries).', results.'));
+        set(handles.timeDisplay,'String',(time));
+        set(handles.functionDisplay,'String',char(f));
+        set(handles.uitable1, 'columnname', {'query', 'result'});
+        set(handles.uitable1,'Data',tempo);
+        ezplot(f,[-100,100,-100,100]);
+        hold on;
+        scatter(str2double(points), str2double(correspondingPoints))
         xL = xlim;
         yL = ylim;
         line(xL, [0 0],'color','k','linewidth',1);
         line([0 0], yL,'color','k','linewidth',1);
         zoom on;
-        legend("F(X)","XLower","XUpper");
+        legend("F(X)","Points");
         hold off;
 end
 
@@ -245,6 +258,52 @@ function edit4_Callback(hObject, eventdata, handles)
 % --- Executes during object creation, after setting all properties.
 function edit4_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to edit4 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function functionDisplay_Callback(hObject, eventdata, handles)
+% hObject    handle to functionDisplay (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of functionDisplay as text
+%        str2double(get(hObject,'String')) returns contents of functionDisplay as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function functionDisplay_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to functionDisplay (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function timeDisplay_Callback(hObject, eventdata, handles)
+% hObject    handle to timeDisplay (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of timeDisplay as text
+%        str2double(get(hObject,'String')) returns contents of timeDisplay as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function timeDisplay_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to timeDisplay (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 

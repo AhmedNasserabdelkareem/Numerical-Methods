@@ -1,5 +1,5 @@
-function [XL,XU,XR,ea,f] = bisection(fx,xl,xu,es,imax)
-     
+function [XL,XU,XR,ea,f, excution_time] = bisection(fx,xl,xu,es,imax)
+  tic;   
     f = str2func(['@(x)' vectorize(char(fx))]);
         
     if(f(xu)*f(xl)) > 0 
@@ -37,5 +37,6 @@ function [XL,XU,XR,ea,f] = bisection(fx,xl,xu,es,imax)
     end
     %s=sprintf('\n Root= %f #Iterations = %d \n', xr,i);
     %disp(s);
+    excution_time = toc;
 end
 

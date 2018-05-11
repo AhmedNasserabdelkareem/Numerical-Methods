@@ -1,5 +1,5 @@
-function [f, g, xNew, error] = Untitled(equation ,maxIteration, tolerance, initialPoint )
-
+function [f, g, xNew, error, excution_time] = Untitled(equation ,maxIteration, tolerance, initialPoint )
+tic;
 S = vectorize(char(equation)); %str = x^2-6*x
 f = str2func(['@(x) ' S]);
 syms x
@@ -42,6 +42,7 @@ while error(index - 1) > tolerance && iter < iter_max
     iter = iter + 1;
     index = index + 1;
 end
+    excution_time = toc;
 
 end
 
