@@ -25,7 +25,11 @@ for i = 1:upper
    xnew = vpa(xnew);
    Xiold(i) = xi;
    Xinew(i) =vpa(xnew);
+   if(xnew ~= 0)
    test = ((abs(vpa(xnew)-xi)/vpa(xnew)));
+   else
+       test = 100000;
+   end
    Ea(i) = test;
    if (abs(vpa(test))<=tolerance)
        break;
