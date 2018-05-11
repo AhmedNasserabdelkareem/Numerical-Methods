@@ -344,7 +344,19 @@ switch method
         
         
     case "6- Bierge Vieta"
-        %call method bisection
+        [ error,root,fn,fx,iteration_no,iterations,excution_time,X,A,B,C,AbsErr ] = birge_Vieta( str2double(x),Eqs,str2double(iter),str2double(eps) );
+        set(handles.TimeDisplay,'String',excution_time);
+        ezplot(fn);
+        hold on;
+        ezplot(fx);
+        xL = xlim;
+        yL = ylim;
+        hold on;
+        line(xL, [0 0],'color','k','linewidth',1);
+        line([0 0], yL,'color','k','linewidth',1);
+        zoom on;
+        legend("F(X)","F'(X)");
+        hold off;
         hideTwo(handles);
         
     case "7- General Algorithm"

@@ -40,7 +40,7 @@ for j =1:upper
         error = 1;
         break;
         end 
-        Ea(j+1) = abs((P(j+1)-P(j))/P(j+1));
+        Ea(j+1) = abs((P(j+1)-P(j)));
         if Ea(j+1)<tolerance
           break; 
        end    
