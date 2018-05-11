@@ -1,4 +1,4 @@
-function [ error,fn,fx,iteration_no,excution_time,iteration,Xi,XiPlusOne,XiMinusOne,AbsErr ] = secant( xold0,xold1,str,upper,tolerance )
+function [ root,error,fn,fx,iteration_no,excution_time,iteration,Xi,XiPlusOne,XiMinusOne,AbsErr ] = secant( xold0,xold1,str,upper,tolerance )
 %secant finds root of given function.
 %   Secant method finds the root of the given function using the secant
 %   method.
@@ -44,6 +44,7 @@ Xi = Xiold1;
 XiPlusOne = Xinew;
 XiMinusOne = Xiold0;
 AbsErr = Ea;
+root = XiPlusOne(i);
 excution_time = toc;
 end
 

@@ -1,4 +1,4 @@
-function [ fn,fx,error,iteration_no,excution_time,iteration,Xi,XiPlusOne,AbsErr ] = newton_Raphson( x0,str,upper,tolerance )
+function [ root,fn,fx,error,iteration_no,excution_time,iteration,Xi,XiPlusOne,AbsErr ] = newton_Raphson( x0,str,upper,tolerance )
 %finds root of a function.
 %Given an initial point and the function, this function will find the
 %nearest root using the newton raphson method.
@@ -37,6 +37,7 @@ iteration_no = i;
 Xi = Xiold;
 XiPlusOne = Xinew;
 AbsErr = Ea;
+root = XiPlusOne(i);
 excution_time = toc;
 end
 
