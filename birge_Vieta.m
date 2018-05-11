@@ -1,4 +1,4 @@
-function [ error,root,fn,fx,iteration_no,iterations,excution_time,X,A,B,C,AbsErr ] = birge_Vieta( p0,str,upper,tolerance )
+function [ error,root,fn,fx,iteration_no,iterations,excution_time,X,A,B,C,AbsErr,RelErr ] = birge_Vieta( p0,str,upper,tolerance )
 %birge_Vieta finds a root for the given function.
 %   Using Birge Vieta method this function will find a root for the given
 %   function.
@@ -11,6 +11,7 @@ catch exception
     B = inf(upper,4);
     C = inf(upper,4);
     AbsErr = inf(upper,1);
+    RelErr = inf(upper,1);
     error = 1;
     root = inf;
     S = vectorize(char(str));
@@ -35,10 +36,10 @@ while vpa(fntemp) ~= 0
 end
 P = inf(upper,1);
 Ea = inf(upper,1);
+Er = inf(upper,1);
 b = inf(upper,degree);
 c = inf(upper,degree-1);
 P(1) = p0;
-%syms x;
 a = coeffs(fn,x,'All');
 for j =1:upper
      b(j,1)=a(1);
@@ -60,6 +61,11 @@ for j =1:upper
         break;
         end 
         Ea(j+1) = abs((P(j+1)-P(j)));
+        if P(j+1) == 0
+           Er(j+1) = 1000000; 
+        else    
+        Er(j+1) = abs((P(j+1)-P(j))/P(j+1));
+        end
         if Ea(j+1)<tolerance
           break; 
        end    
@@ -74,6 +80,7 @@ X = P;
 A = a;
 B = b;
 C = c;
+RelErr = Er;
 AbsErr = Ea;
 root = P(j);
 excution_time = toc;
