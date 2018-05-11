@@ -3,25 +3,7 @@ function [ error,root,fn,fx,iteration_no,iterations,excution_time,X,A,B,C,AbsErr
 %   Using Birge Vieta method this function will find a root for the given
 %   function.
 tic;
-try
-   sym2poly(str);
-catch exception
-    X = inf(upper,1);
-    A = inf(upper,1);
-    B = inf(upper,4);
-    C = inf(upper,4);
-    AbsErr = inf(upper,1);
-    error = 1;
-    root = inf;
-    S = vectorize(char(str));
-    fn = str2func(['@(x) ' S]);
-    syms x;
-    fx = diff(fn,x);
-    iteration_no = inf;
-    iterations = inf;
-    excution_time = toc;
-    return;
-end
+try{
 S = vectorize(char(str));
 fn = str2func(['@(x) ' S]);
 fntemp = fn;
