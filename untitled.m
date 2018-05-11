@@ -359,23 +359,19 @@ switch method
         zoom on;
         legend("F(X)","F'(X)");
         hold off;
-<<<<<<< HEAD
-=======
-        hideTwo(handles);
          tempo = cat(2,roots.',fn.');
         set(handles.uitable1, 'columnname', {'roots', 'Fn'});
         set(handles.uitable1,'Data',tempo);
             
->>>>>>> 962e22d3f1859a081db6cac7f6fbbf0c36a7e843
         
     case "7- General Algorithm"
-        [roots,fn,time] = general( Eqs );
+        [rots,fn,time] = general( Eqs );
         ezplot(fn);
         xL = xlim;
         yL = ylim;
         set(handles.timedisplay,'String',time);
         set(handles.uitable1, 'columnname', {'roots',' '});
-        set(handles.uitable1,'Data',roots);
+        set(handles.uitable1,'Data',rots);
         hold on;
         line(xL, [0 0],'color','k','linewidth',1);
         line([0 0], yL,'color','k','linewidth',1);
