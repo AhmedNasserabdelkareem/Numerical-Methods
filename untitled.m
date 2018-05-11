@@ -366,13 +366,13 @@ switch method
             
         
     case "7- General Algorithm"
-        [roots,fn,time] = general( Eqs );
+        [rootsx,fn,time] = general( Eqs );
         ezplot(fn);
         xL = xlim;
         yL = ylim;
         set(handles.timedisplay,'String',time);
         set(handles.uitable1, 'columnname', {'roots',' '});
-        set(handles.uitable1,'Data',roots);
+        set(handles.uitable1,'Data',rootsx);
         hold on;
         line(xL, [0 0],'color','k','linewidth',1);
         line([0 0], yL,'color','k','linewidth',1);
@@ -393,6 +393,196 @@ end
 % --- Executes on button press in pushbutton3.
 function pushbutton3_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton3 (see GCBO)
+global Eqs ;
+global eps;
+global method;
+global points;
+global iter;
+[baseName, folder] = uigetfile();
+
+try
+fullFileName = fullfile(folder, baseName);
+A  = Read(fullFileName);
+method = A{1};
+Eqs = A{2};
+points = A{3};
+eps = A{4};
+iter = A{5};
+newStr = extractBetween(points,"[","]");
+points =  strsplit(newStr,' ');
+xUpper = points(1,1);
+xLower = points(1,2);
+
+catch
+err_message = msgbox('File is not chosen') ;
+end
+disp(method);
+disp(Eqs);
+disp(points);
+disp(eps);
+disp(iter);
+
+% handles.index = 0
+% handles.flags =zeros(6,1);
+% guidata(hObject,handles);
+% iterations = get(handles.edit2,'String');
+% epsilon = get(handles.edit3,'String');
+% eps=epsilon;
+% iter =iterations;
+% if (epsilon=="")
+%     eps=num2str(0.0001);
+% end;
+% if (iterations=="")
+%     iter=num2str(50);
+% end;
+% 
+% 
+% method =get(handles.text11,'String');
+switch method
+    case '1'
+        [XL,XU,XR,ea,f,time,error] = bisection(Eqs , str2double(xLower), str2double(xUpper), str2double(eps), str2double(iter));
+        ezplot(f);
+        hold on;
+        plot([XL(1) XL(1)], ylim);
+        hold on;
+        plot([XU(1) XU(1)], ylim);
+        xL = xlim;
+        yL = ylim;
+        line(xL, [0 0],'color','k','linewidth',1);
+        line([0 0], yL,'color','k','linewidth',1);
+        zoom out;
+        legend("F(X)","XLower","XUpper");
+        hold off;
+        set(handles.timedisplay,'String',time);
+        tempo = cat(2,XL.',XU.');
+        temperror = cat(2,XR.',ea.');
+        matrix = cat(2,tempo,temperror);
+        set(handles.uitable1, 'columnname', {'Xr', 'Xl', 'Xr', 'ea'});
+        set(handles.errordisplay,'String',error);
+        set(handles.uitable1,'Data',matrix);
+    case '2'
+        [XL,XU,XR,ea,f,time,error] = falsePosition(Eqs,str2double(xLower), str2double(xUpper), str2double(eps), str2double(iter));
+        ezplot(f,-100,100);
+        hold on;
+        plot([XL(1) XL(1)], ylim);
+        hold on;
+        plot([XU(1) XU(1)], ylim);
+        xL = xlim;
+        yL = ylim;
+        line(xL, [0 0],'color','k','linewidth',1);
+        line([0 0], yL,'color','k','linewidth',1);
+        zoom on;
+        legend("F(X)","XLower","XUpper");
+        hold off;
+        set(handles.timedisplay,'String',time);
+        set(handles.errordisplay,'String',error);
+        tempo = cat(2,XL.',XU.');
+        temperror = cat(2,XR.',ea.');
+        matrix = cat(2,tempo,temperror);
+        axes(handles.axes1,'HI',tempo);
+
+        set(handles.uitable1, 'columnname', {'Xr', 'Xl', 'Xr', 'ea'});
+        set(handles.uitable1,'Data',matrix);
+    case "3"
+        %call method bisection
+        [f, g, xNew, error,time] = FixedPoint (Eqs ,str2double(iter), str2double(eps), str2double(x) );
+        ezplot(f,-5000,5000);
+        hold on;
+        ezplot(g);
+        xL = xlim;
+        yL = ylim;
+        line(xL, [0 0],'color','k','linewidth',1);
+        line([0 0], yL,'color','k','linewidth',1);
+        zoom on;
+        legend("g(X)","F(X)");
+        hold off;
+        tempo = cat(2,f.',g.');
+        temperror = cat(2,xNew.',error.');
+        matrix = cat(2,tempo,temperror);
+        set(handles.uitable1, 'columnname', {'f', 'g', 'Xnew', 'error'});
+        set(handles.timedisplay,'String',time);
+        set(handles.uitable1,'Data',matrix);
+    case "4"
+        [ root,fn,fx,error,iteration_no,excution_time,iteration,Xi,XiPlusOne,AbsErr ] = newton_Raphson( str2double(x),Eqs,str2double(iter),str2double(eps) );
+        ezplot(fn);
+        hold on;
+        ezplot(fx);
+        xL = xlim;
+        yL = ylim;
+        hold on;
+        line(xL, [0 0],'color','k','linewidth',1);
+        line([0 0], yL,'color','k','linewidth',1);
+        zoom on;
+        legend("F(X)","F'(X)");
+        hold off;
+        tempo = cat(2,Xi.',XiPlusOne.');
+        temperror = cat(2,fx.',AbsErr.');
+        matrix = cat(2,tempo,temperror);
+        set(handles.uitable1, 'columnname', {'Xi', 'Xi+1', 'Fx', 'error'});
+        set(handles.uitable1,'Data',matrix);
+        set(handles.timedisplay,'String',excution_time);
+        set(handles.errordisplay,'String',error);
+    case "5"
+        hideTwo(handles);
+        [ root,error,fn,fx,iteration_no,excution_time,iteration,Xi,XiPlusOne,XiMinusOne,AbsErr ] = secant( str2double(xLower),str2double(xUpper),Eqs,str2double(iter),str2double(eps) );
+        set(handles.TimeDisplay,'String',excution_time);
+        ezplot(fn);
+        hold on;
+        ezplot(fx);
+        xL = xlim;
+        yL = ylim;
+        hold on;
+        line(xL, [0 0],'color','k','linewidth',1);
+        line([0 0], yL,'color','k','linewidth',1);
+        zoom on;
+        legend("F(X)","F'(X)");
+        hold off;
+        tempo = cat(2,Xi.',XiPlusOne.');
+        temperror = cat(2,fx.',AbsErr.');
+        matrix = cat(2,tempo,temperror);
+        set(handles.uitable1, 'columnname', {'Xi', 'Xi+1', 'Fx', 'error'});
+        set(handles.uitable1,'Data',matrix);
+        set(handles.timedisplay,'String',excution_time);
+        set(handles.errordisplay,'String',error);
+        
+        
+    case "6"
+        [ error,root,fn,fx,iteration_no,iterations,excution_time,X,A,B,C,AbsErr ] = birge_Vieta( str2double(x),Eqs,str2double(iter),str2double(eps) );
+        set(handles.TimeDisplay,'String',excution_time);
+        ezplot(fn);
+        hold on;
+        ezplot(fx);
+        xL = xlim;
+        yL = ylim;
+        hold on;
+        line(xL, [0 0],'color','k','linewidth',1);
+        line([0 0], yL,'color','k','linewidth',1);
+        zoom on;
+        legend("F(X)","F'(X)");
+        hold off;
+        hideTwo(handles);
+         tempo = cat(2,roots.',fn.');
+        set(handles.uitable1, 'columnname', {'roots', 'Fn'});
+        set(handles.uitable1,'Data',tempo);
+            
+        
+    case "7"
+        [rootsx,fn,time] = general( Eqs );
+        ezplot(fn);
+        xL = xlim;
+        yL = ylim;
+        set(handles.timedisplay,'String',time);
+        set(handles.uitable1, 'columnname', {'roots',' '});
+        set(handles.uitable1,'Data',rootsx);
+        hold on;
+        line(xL, [0 0],'color','k','linewidth',1);
+        line([0 0], yL,'color','k','linewidth',1);
+        zoom on;
+        legend("F(X)","F'(X)");
+        set(handles.timedisplay,'String',time);
+        hold off;
+        
+end
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
